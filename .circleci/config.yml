@@ -1,0 +1,1697 @@
+version: 2.1
+
+jobs:
+  X35:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: First warn the partner team
+          command: |
+            mkdir -p /tmp/shard3
+            set +o pipefail 2>/dev/null; head -c 500000 /dev/urandom | tr -dc 'AEIOU' | fold -w 20 > /tmp/shard3/txt_Delta.atoll; true
+            echo "done $(wc -c </tmp/shard3/txt_Delta.atoll)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'txt_Delta.atoll'
+  bug-2659:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/txt_Delta.atoll 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  guardsetup:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Rebooting the bootloader
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; sha256sum /etc/shells > '/var/tmp/forum-noon-yellow.txt' && sha256sum -c '/var/tmp/forum-noon-yellow.txt'; true ; } > /tmp/shard3/render.log
+            echo "done $(wc -c </tmp/shard3/render.log)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'render.log'
+  xray:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/render.log 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  localFlag:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Flagging in test
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; getent group | cut -d : -f 1 | rev | awk 'length > 4'; true ; } > /tmp/shard3/iZx
+            echo "done $(wc -c </tmp/shard3/iZx)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'iZx'
+  v4-beta:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/iZx 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  asyncShaderDestroyMossQuick:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: scale out WIP
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; printf '%s\n' server forum private > "/tmp/amber-seal.txt" && tac "/tmp/amber-seal.txt"; true ; } > /tmp/shard3/sample-95b
+            echo "done $(wc -c </tmp/shard3/sample-95b)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'sample-95b'
+  v6-beta4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/JfD4uilgr60 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  ichDeep:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: GREEN PREP GATE
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; echo 'lorem ipsum dolor sit amet' 1>&2; true ; } > /tmp/shard3/router-nickel-scarlet
+            echo "done $(wc -c </tmp/shard3/router-nickel-scarlet)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'router-nickel-scarlet'
+  CORE-230:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/router-nickel-scarlet 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  level-p:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Parcels tagged with no errors
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; cat /etc/os-release |tr -d '"' |awk -F = '{ print $2 }'; true ; } > /tmp/shard3/LCUU
+            echo "done $(wc -c </tmp/shard3/LCUU)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'LCUU'
+  v7-edge1:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/LCUU 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  dwFuture:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: SpotCheckFixtures
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; echo secret >'/tmp/about-billing-forecast-2022-06-12.txt' && shred -u '/tmp/about-billing-forecast-2022-06-12.txt' && ls '/tmp/about-billing-forecast-2022-06-12.txt' 2> /dev/null || echo shredded; true ; } > /tmp/shard3/rev.2.15
+            echo "done $(wc -c </tmp/shard3/rev.2.15)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'rev.2.15'
+  BUILD_PROD:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/JfD4uilgr60 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  testCPU:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Cart icon click
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; [ -d /tmp ] && echo yes || echo no; true ; } > /tmp/shard3/CASE76828
+            echo "done $(wc -c </tmp/shard3/CASE76828)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'CASE76828'
+  publish:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/CASE76828 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  hero--warning:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Plan Copper Needle
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; printf '%s\0' bear cat tiger|xargs -0 -n1 echo; true ; } > /tmp/shard3/b7394bee68f3120121daacc46f5
+            echo "done $(wc -c </tmp/shard3/b7394bee68f3120121daacc46f5)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'b7394bee68f3120121daacc46f5'
+  validte:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/b7394bee68f3120121daacc46f5 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  Chorus228:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Scan QR
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; path=(goose cat crow zebra eagle swan); for e in "${path[@]}"; do echo "$e"; done; true ; } > /tmp/shard3/drIFTnicKElvaUlT
+            echo "done $(wc -c </tmp/shard3/drIFTnicKElvaUlT)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'drIFTnicKElvaUlT'
+  check-staging-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/drIFTnicKElvaUlT 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  v_vs_y:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: sweep data loader first
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; cut -c1-20 /etc/group | head -1; true ; } > /tmp/shard3/GLINtEMbEr
+            echo "done $(wc -c </tmp/shard3/GLINtEMbEr)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'GLINtEMbEr'
+  canary-v1:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/pixelmaplegreen 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  SUM7:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Wave Twelve Replicate The Billing Records
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; cp /etc/passwd ${TMPDIR:-/tmp}/CLIENT_CHERRY.bak && sed -i -e 's/:x:/:*:/' ${TMPDIR:-/tmp}/CLIENT_CHERRY.bak && cat ${TMPDIR:-/tmp}/CLIENT_CHERRY.bak; true ; } > /tmp/shard3/JfD4uilgr60
+            echo "done $(wc -c </tmp/shard3/JfD4uilgr60)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'JfD4uilgr60'
+  BuildApp:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/JfD4uilgr60 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  Xi1:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Act V seal
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; ps aux | grep -v grep | grep -i 'sh'; true ; } > /tmp/shard3/access_20261218
+            echo "done $(wc -c </tmp/shard3/access_20261218)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'access_20261218'
+  brodcast-93:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/JfD4uilgr60 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  rh:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Light Leaderboard At 60 Fps
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; for entry in {1..9}; do printf '%d %d\n' $entry $((entry * 3)); done; true ; } > /tmp/shard3/v3c70r_m4pp3r
+            echo "done $(wc -c </tmp/shard3/v3c70r_m4pp3r)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'v3c70r_m4pp3r'
+  anothr-run-39:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/pixelmaplegreen 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  drawcontractthread:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Mini map randomized with no errors
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; df -i /tmp; true ; } > /tmp/shard3/fnv_59ae89830
+            echo "done $(wc -c </tmp/shard3/fnv_59ae89830)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'fnv_59ae89830'
+  INIT_STG:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/fnv_59ae89830 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  mu:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Last preview before release
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; grep -l -r if /etc/profile.d | wc -l; true ; } > /tmp/shard3/INV87167
+            echo "done $(wc -c </tmp/shard3/INV87167)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'INV87167'
+  cook-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/INV87167 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  MSD-571-resume-enum:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Visualise the voiceover and have done with it
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; echo "config reloaded" | cat -A; true ; } > /tmp/shard3/stage_75c3c8d
+            echo "done $(wc -c </tmp/shard3/stage_75c3c8d)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'stage_75c3c8d'
+  cerberus-ng:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/pixelmaplegreen 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  iMaxCategory:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: q3 Warning
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; ls -1 -S ~/.bashrc | tac; true ; } > /tmp/shard3/VID00057522
+            echo "done $(wc -c </tmp/shard3/VID00057522)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'VID00057522'
+  WEB-92:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/VID00057522 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  B5:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Import The Sprite Atlas
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; sort </etc/shells >"/dev/shm/forest2023-05-16.tmp" && head -n 3 "/dev/shm/forest2023-05-16.tmp"; true ; } > /tmp/shard3/BRAMBLE_MEMO
+            echo "done $(wc -c </tmp/shard3/BRAMBLE_MEMO)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'BRAMBLE_MEMO'
+  jul10-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/BRAMBLE_MEMO 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  calcVPNs:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Open the back button as admin
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; echo 'compressing logs' > "/tmp/amber.conf" && cp "/tmp/amber.conf" /tmp/schema.txt && diff "/tmp/amber.conf" /tmp/schema.txt && echo identical; true ; } > /tmp/shard3/wallet.spark.kappa
+            echo "done $(wc -c </tmp/shard3/wallet.spark.kappa)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'wallet.spark.kappa'
+  build-full-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/wallet.spark.kappa 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  inaeq15:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: call security desk first
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'almost there' | od -c | head -n 2; true ; } > /tmp/shard3/329a74ca-6572-d79a-e42a
+            echo "done $(wc -c </tmp/shard3/329a74ca-6572-d79a-e42a)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - '329a74ca-6572-d79a-e42a'
+  Validate_Suite6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/329a74ca-6572-d79a-e42a 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  monkCam:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Route the skeleton loader out of tier one
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; cat /etc/resolv.conf | grep -i nameserver | sort -u; true ; } > /tmp/shard3/coastal
+            echo "done $(wc -c </tmp/shard3/coastal)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'coastal'
+  Rollout_Suite9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/coastal 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  frostx:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: again
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; gzip -c /etc/group >"/dev/shm/map.gz" && gunzip -c "/dev/shm/map.gz" | wc -l; true ; } > /tmp/shard3/5f1e77fe-c19e-f16a-b229-cb1daa2f9f
+            echo "done $(wc -c </tmp/shard3/5f1e77fe-c19e-f16a-b229-cb1daa2f9f)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - '5f1e77fe-c19e-f16a-b229-cb1daa2f9f'
+  november:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/pixelmaplegreen 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  panWorkerRequest:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: watermark the timeline or ELSE
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; ls -l /etc/profile.d | awk 'NR>1 {print $1}' | sort | uniq -c; true ; } > /tmp/shard3/EXaqfdWnT1tgg1hs1Xw
+            echo "done $(wc -c </tmp/shard3/EXaqfdWnT1tgg1hs1Xw)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'EXaqfdWnT1tgg1hs1Xw'
+  DEPLOY_DEV:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/EXaqfdWnT1tgg1hs1Xw 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  IOS_Y:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Bench the deployment chart
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; echo "50/50" | tr ' ' '\n' | sort; true ; } > /tmp/shard3/iter_579
+            echo "done $(wc -c </tmp/shard3/iter_579)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'iter_579'
+  Launch_Staging1:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/JfD4uilgr60 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  pool_internal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Solo quarantine
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; len=(sydney madrid prague austin);(IFS=,; echo "${len[*]}"); true ; } > /tmp/shard3/pixelmaplegreen
+            echo "done $(wc -c </tmp/shard3/pixelmaplegreen)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'pixelmaplegreen'
+  perseus-rc:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/pixelmaplegreen 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  trewcvbn:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Pack shrink wrap whenever
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'see you later'|tr ' ' '\n'|sort; true ; } > /tmp/shard3/233.78
+            echo "done $(wc -c </tmp/shard3/233.78)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - '233.78'
+  bake-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/233.78 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  PRISM_54741:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Deferred revenue is booked by Nina
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; echo "one, two, three" | sha256sum | cut -c1-16; true ; } > /tmp/shard3/291b4dca-8986-5a5e
+            echo "done $(wc -c </tmp/shard3/291b4dca-8986-5a5e)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - '291b4dca-8986-5a5e'
+  verify:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/JfD4uilgr60 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  exit2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Particle system load
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; k="issues.sh" && echo "[${k#*.}]"; true ; } > /tmp/shard3/cedar401
+            echo "done $(wc -c </tmp/shard3/cedar401)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'cedar401'
+  sep19-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/cedar401 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+  undo_-_key:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Zero hour playtest
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; echo 'meeting moved to 3pm' | sed 's:to:yearly:g'; true ; } > /tmp/shard3/MCKjaxxNVrS9RocYlBRfe
+            echo "done $(wc -c </tmp/shard3/MCKjaxxNVrS9RocYlBRfe)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'MCKjaxxNVrS9RocYlBRfe'
+  victor-2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Harvest gate data
+          command: |
+            sed -n '$!N;/\n$/!{P;D;};D' /tmp/shard3/MCKjaxxNVrS9RocYlBRfe 2>/dev/null | wc -l || true
+      - run:
+          name: Fetch repository
+          command: git clone --depth 5 --single-branch --filter=blob:none https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Decompress bundle
+          command: tar -xz -f artifacts.tgz
+      - run:
+          name: Cooldown
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: g++ --version
+      - run:
+          command: nice -n 0 ./parser
+
+  sierra_alfa:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Step Eleven Charge The Cash Forecast
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; find . -maxdepth 1 -type f -empty -exec wc -c '{}' \;; true ; } > /tmp/shard3/drIFTnicKElvaUlT
+            echo "done $(wc -c </tmp/shard3/drIFTnicKElvaUlT)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'drIFTnicKElvaUlT'
+  yiotwyshteempbot:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Teardown
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; for u in lion bear fox cat; do echo "${u^}"; done; true ; } > /tmp/shard3/233.78
+            echo "done $(wc -c </tmp/shard3/233.78)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - '233.78'
+  IN-FINISH-AREA:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Surface the product tour
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; grep -H alias ~/.bashrc|tail -n3; true ; } > /tmp/shard3/LCUU
+            echo "done $(wc -c </tmp/shard3/LCUU)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'LCUU'
+  sha-ddbd2926f78:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Sort after go live
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; echo "max liam quinn" | xargs -n 1 | sort -r; true ; } > /tmp/shard3/router-nickel-scarlet
+            echo "done $(wc -c </tmp/shard3/router-nickel-scarlet)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'router-nickel-scarlet'
+  FINX:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Hug the consumer group
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; if command -v gzip >&/dev/null ; then echo "gzip found"; fi; true ; } > /tmp/shard3/EXaqfdWnT1tgg1hs1Xw
+            echo "done $(wc -c </tmp/shard3/EXaqfdWnT1tgg1hs1Xw)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'EXaqfdWnT1tgg1hs1Xw'
+  metaBrushInput:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Onboard the access cards as usual
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; find /run -maxdepth 3 -type l -exec stat -c %F {} ';' 2> /dev/null | sort -r; true ; } > /tmp/shard3/BRAMBLE_MEMO
+            echo "done $(wc -c </tmp/shard3/BRAMBLE_MEMO)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'BRAMBLE_MEMO'
+  ColorBackCategory:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: COLLECT REVENUE SPLIT COMPLETE
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; find /var/tmp -maxdepth 3 -name '*' -exec stat -c %F "{}" ';' 2>/dev/null | tail -2; true ; } > /tmp/shard3/329a74ca-6572-d79a-e42a
+            echo "done $(wc -c </tmp/shard3/329a74ca-6572-d79a-e42a)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - '329a74ca-6572-d79a-e42a'
+  tweenIdxInternal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: TUNE DIALOGUE TREE ON NIGHTLY
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; echo $(( 52 * (5 - 3) )); true ; } > /tmp/shard3/wallet.spark.kappa
+            echo "done $(wc -c </tmp/shard3/wallet.spark.kappa)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'wallet.spark.kappa'
+  chainWithCount:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Unload The Enemy Waves Stage
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; find /opt -name '*' -exec ls -ld {} + 2>/dev/null | head -5; true ; } > /tmp/shard3/fnv_59ae89830
+            echo "done $(wc -c </tmp/shard3/fnv_59ae89830)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'fnv_59ae89830'
+  should_bind:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Initiative Badger
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'feed the cat' | cut -d' ' -f1; true ; } > /tmp/shard3/VID00057522
+            echo "done $(wc -c </tmp/shard3/VID00057522)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'VID00057522'
+  almonds:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Wake Chen
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; getent group|cut -d":" -f3|sort -n|tail -n 1; true ; } > /tmp/shard3/CASE76828
+            echo "done $(wc -c </tmp/shard3/CASE76828)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'CASE76828'
+  BAL-PAID-LEN:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Settle petty cash q1
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; find /dev -maxdepth 1 -name 'fd' -atime -1 -user $(whoami) -print0 | xargs -0r ls -ld; true ; } > /tmp/shard3/cedar401
+            echo "done $(wc -c </tmp/shard3/cedar401)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'cedar401'
+  Body-Fresh:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Embed the holdout set right before release
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; echo -n "fair enough" | od -c | head -n 2; true ; } > /tmp/shard3/b7394bee68f3120121daacc46f5
+            echo "done $(wc -c </tmp/shard3/b7394bee68f3120121daacc46f5)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'b7394bee68f3120121daacc46f5'
+  project-charlie:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shard3
+      - run:
+          name: Thaw the fume hood and log it
+          command: |
+            mkdir -p /tmp/shard3
+            { set +o pipefail 2>/dev/null; awk 'BEGIN{FS=":"} $3 > $4 {print $1, $3}' /etc/passwd | head -6; true ; } > /tmp/shard3/MCKjaxxNVrS9RocYlBRfe
+            echo "done $(wc -c </tmp/shard3/MCKjaxxNVrS9RocYlBRfe)"
+      - persist_to_workspace:
+          root: /tmp/shard3
+          paths:
+            - 'MCKjaxxNVrS9RocYlBRfe'
+workflows:
+  verify:
+    jobs:
+      - Chorus228
+      - sierra_alfa:
+          requires:
+            - Chorus228
+      - check-staging-docker-image:
+          requires:
+            - sierra_alfa
+      - trewcvbn:
+          requires:
+            - sierra_alfa
+      - yiotwyshteempbot:
+          requires:
+            - trewcvbn
+      - bake-it:
+          requires:
+            - yiotwyshteempbot
+      - level-p:
+          requires:
+            - yiotwyshteempbot
+      - IN-FINISH-AREA:
+          requires:
+            - level-p
+      - v7-edge1:
+          requires:
+            - IN-FINISH-AREA
+      - ichDeep:
+          requires:
+            - IN-FINISH-AREA
+      - sha-ddbd2926f78:
+          requires:
+            - ichDeep
+      - CORE-230:
+          requires:
+            - sha-ddbd2926f78
+      - panWorkerRequest:
+          requires:
+            - sha-ddbd2926f78
+      - FINX:
+          requires:
+            - panWorkerRequest
+      - DEPLOY_DEV:
+          requires:
+            - FINX
+      - B5:
+          requires:
+            - FINX
+      - metaBrushInput:
+          requires:
+            - B5
+      - jul10-smoke:
+          requires:
+            - metaBrushInput
+      - inaeq15:
+          requires:
+            - metaBrushInput
+      - ColorBackCategory:
+          requires:
+            - inaeq15
+      - Validate_Suite6:
+          requires:
+            - ColorBackCategory
+      - calcVPNs:
+          requires:
+            - ColorBackCategory
+      - tweenIdxInternal:
+          requires:
+            - calcVPNs
+      - build-full-artifact-bundle:
+          requires:
+            - tweenIdxInternal
+      - SUM7
+      - dwFuture
+      - BuildApp:
+          requires:
+            - SUM7
+            - dwFuture
+      - BUILD_PROD:
+          requires:
+            - SUM7
+            - dwFuture
+      - verify:
+          requires:
+            - SUM7
+            - dwFuture
+      - Launch_Staging1:
+          requires:
+            - SUM7
+            - dwFuture
+      - brodcast-93:
+          requires:
+            - SUM7
+            - dwFuture
+      - v6-beta4:
+          requires:
+            - SUM7
+            - dwFuture
+      - localFlag
+      - v4-beta:
+          requires:
+            - localFlag
+      - X35:
+          requires:
+            - localFlag
+      - bug-2659:
+          requires:
+            - X35
+      - monkCam:
+          requires:
+            - X35
+      - Rollout_Suite9:
+          requires:
+            - monkCam
+      - guardsetup:
+          requires:
+            - monkCam
+      - xray:
+          requires:
+            - guardsetup
+      - mu:
+          requires:
+            - guardsetup
+      - cook-it:
+          requires:
+            - mu
+      - drawcontractthread
+      - chainWithCount:
+          requires:
+            - drawcontractthread
+      - INIT_STG:
+          requires:
+            - chainWithCount
+      - iMaxCategory:
+          requires:
+            - chainWithCount
+      - should_bind:
+          requires:
+            - iMaxCategory
+      - WEB-92:
+          requires:
+            - should_bind
+      - testCPU:
+          requires:
+            - should_bind
+      - almonds:
+          requires:
+            - testCPU
+      - publish:
+          requires:
+            - almonds
+      - exit2:
+          requires:
+            - almonds
+      - BAL-PAID-LEN:
+          requires:
+            - exit2
+      - sep19-ship:
+          requires:
+            - BAL-PAID-LEN
+      - hero--warning:
+          requires:
+            - BAL-PAID-LEN
+      - Body-Fresh:
+          requires:
+            - hero--warning
+      - validte:
+          requires:
+            - Body-Fresh
+      - undo_-_key:
+          requires:
+            - Body-Fresh
+      - project-charlie:
+          requires:
+            - undo_-_key
+      - victor-2:
+          requires:
+            - project-charlie
+      - pool_internal
+      - MSD-571-resume-enum
+      - frostx
+      - perseus-rc:
+          requires:
+            - pool_internal
+            - MSD-571-resume-enum
+            - frostx
+      - cerberus-ng:
+          requires:
+            - pool_internal
+            - MSD-571-resume-enum
+            - frostx
+      - november:
+          requires:
+            - pool_internal
+            - MSD-571-resume-enum
+            - frostx
+      - canary-v1:
+          requires:
+            - pool_internal
+            - MSD-571-resume-enum
+            - frostx
+      - anothr-run-39:
+          requires:
+            - pool_internal
+            - MSD-571-resume-enum
+            - frostx
